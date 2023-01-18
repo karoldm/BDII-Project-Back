@@ -1,4 +1,4 @@
-import { Injectable , NotFoundException} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
@@ -8,8 +8,8 @@ export class UsuariosService {
   private users: Usuario[] = [];
 
   create(createUsuarioDto: CreateUsuarioDto) {
-    const usuario ={
-      ...createUsuarioDto
+    const usuario = {
+      ...createUsuarioDto,
     };
 
     this.users.push(usuario);
@@ -21,7 +21,7 @@ export class UsuariosService {
   }
 
   findOne(cpf: string) {
-    const index = this.users.findIndex((Usuario)=>Usuario.cpf==cpf);
+    const index = this.users.findIndex((Usuario) => Usuario.cpf == cpf);
 
     return this.users[index];
   }
@@ -32,22 +32,21 @@ export class UsuariosService {
     const novo_usuario = {
       ...selecao,
       ...updateUsuarioDto,
-    }
+    };
 
-    const index = this.users.findIndex((Usuario)=>Usuario.cpf==cpf);
+    const index = this.users.findIndex((Usuario) => Usuario.cpf == cpf);
 
     this.users[index] = novo_usuario;
     return novo_usuario;
   }
 
   remove(cpf: string) {
-    const index = this.users.findIndex((Usuario)=>Usuario.cpf==cpf);
+    const index = this.users.findIndex((Usuario) => Usuario.cpf == cpf);
 
-    if(index == -1){
+    if (index == -1) {
       throw new NotFoundException(`Usuario com cpf #${cpf} nao achado`);
     }
-    this.users.splice(index,1);
-    
+    this.users.splice(index, 1);
     return;
   }
 }

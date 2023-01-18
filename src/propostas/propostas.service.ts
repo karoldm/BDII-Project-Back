@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePropostaDto } from './dto/create-proposta.dto';
 import { UpdatePropostaDto } from './dto/update-proposta.dto';
 import { Proposta } from './entities/proposta.entity';
@@ -7,8 +7,8 @@ import { Proposta } from './entities/proposta.entity';
 export class PropostasService {
   private propostas: Proposta[] = [];
   create(createPropostaDto: CreatePropostaDto) {
-    const Proposta ={
-      ...createPropostaDto
+    const Proposta = {
+      ...createPropostaDto,
     };
 
     this.propostas.push(Proposta);
@@ -21,7 +21,7 @@ export class PropostasService {
   }
 
   findOne(id: number) {
-    const index = this.propostas.findIndex((Proposta)=>Proposta.numero==id);
+    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
 
     return this.propostas[index];
   }
@@ -32,20 +32,20 @@ export class PropostasService {
     const nova_Proposta = {
       ...selecao,
       ...updatePropostaDto,
-    }
+    };
 
-    const index = this.propostas.findIndex((Proposta)=>Proposta.numero==id);
+    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
 
     this.propostas[index] = nova_Proposta;
     return nova_Proposta;
   }
 
   remove(id: number) {
-    const index = this.propostas.findIndex((Proposta)=>Proposta.numero==id);
+    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
 
-    if(index == -1){
+    if (index == -1) {
       throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
     }
-    this.propostas.splice(index,1);
+    this.propostas.splice(index, 1);
   }
 }

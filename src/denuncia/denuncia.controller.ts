@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { DenunciaService } from './denuncia.service';
 import { CreateDenunciaDto } from './dto/create-denuncia.dto';
 import { UpdateDenunciaDto } from './dto/update-denuncia.dto';
@@ -21,14 +30,17 @@ export class DenunciaController {
   findOne(@Param('id') id: string) {
     const funcao = this.denunciaService.findOne(+id);
 
-    if(!funcao){
-      throw new NotFoundException('Usuario não existente')
+    if (!funcao) {
+      throw new NotFoundException('Usuario não existente');
     }
-    return ;
+    return;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDenunciaDto: UpdateDenunciaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDenunciaDto: UpdateDenunciaDto,
+  ) {
     return this.denunciaService.update(+id, updateDenunciaDto);
   }
 

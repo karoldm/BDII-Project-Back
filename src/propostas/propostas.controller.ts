@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { PropostasService } from './propostas.service';
 import { CreatePropostaDto } from './dto/create-proposta.dto';
 import { UpdatePropostaDto } from './dto/update-proposta.dto';
@@ -21,14 +30,17 @@ export class PropostasController {
   findOne(@Param('id') id: string) {
     const proposta = this.propostasService.findOne(+id);
 
-    if(!proposta){
-      throw new NotFoundException('Usuario não existente')
+    if (!proposta) {
+      throw new NotFoundException('Usuario não existente');
     }
-    return ;
+    return;
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePropostaDto: UpdatePropostaDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePropostaDto: UpdatePropostaDto,
+  ) {
     return this.propostasService.update(+id, updatePropostaDto);
   }
 

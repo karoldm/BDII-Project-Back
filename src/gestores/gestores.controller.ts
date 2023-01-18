@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete,NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { GestoresService } from './gestores.service';
 import { CreateGestoreDto } from './dto/create-gestore.dto';
 import { UpdateGestoreDto } from './dto/update-gestore.dto';
@@ -21,10 +30,10 @@ export class GestoresController {
   findOne(@Param('id') id: string) {
     const funcao = this.gestoresService.findOne(+id);
 
-    if(!funcao){
-      throw new NotFoundException('Usuario não existente')
+    if (!funcao) {
+      throw new NotFoundException('Usuario não existente');
     }
-    return ;
+    return;
   }
 
   @Patch(':id')

@@ -12,9 +12,9 @@ export class PartidoService {
 
     const id = MaxID + 1;
 
-    const Partido ={
+    const Partido = {
       id,
-      ...createPartidoDto
+      ...createPartidoDto,
     };
 
     this.partidos.push(Partido);
@@ -27,7 +27,7 @@ export class PartidoService {
   }
 
   findOne(id: number) {
-    const index = this.partidos.findIndex((Partido)=>Partido.id==id);
+    const index = this.partidos.findIndex((Partido) => Partido.id == id);
 
     return this.partidos[index];
   }
@@ -38,20 +38,20 @@ export class PartidoService {
     const nova_Partido = {
       ...selecao,
       ...updatePartidoDto,
-    }
+    };
 
-    const index = this.partidos.findIndex((Partido)=>Partido.id==id);
+    const index = this.partidos.findIndex((Partido) => Partido.id == id);
 
     this.partidos[index] = nova_Partido;
     return nova_Partido;
   }
 
   remove(id: number) {
-    const index = this.partidos.findIndex((Partido)=>Partido.id==id);
+    const index = this.partidos.findIndex((Partido) => Partido.id == id);
 
-    if(index == -1){
+    if (index == -1) {
       throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
     }
-    this.partidos.splice(index,1);
+    this.partidos.splice(index, 1);
   }
 }

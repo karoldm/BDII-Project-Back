@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -22,14 +30,17 @@ export class UsuariosController {
   findOne(@Param('cpf') cpf: string) {
     const user = this.usuariosService.findOne(cpf);
 
-    if(!user){
-      throw new NotFoundException('Usuario não existente')
+    if (!user) {
+      throw new NotFoundException('Usuario não existente');
     }
-    return ;
+    return;
   }
 
   @Patch(':cpf')
-  update(@Param('cpf') cpf: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
+  update(
+    @Param('cpf') cpf: string,
+    @Body() updateUsuarioDto: UpdateUsuarioDto,
+  ) {
     return this.usuariosService.update(cpf, updateUsuarioDto);
   }
 

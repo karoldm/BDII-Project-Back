@@ -12,9 +12,9 @@ export class DenunciaService {
 
     const id = MaxID + 1;
 
-    const denuncia ={
+    const denuncia = {
       id,
-      ...createDenunciaDto
+      ...createDenunciaDto,
     };
 
     this.denuncias.push(denuncia);
@@ -27,7 +27,7 @@ export class DenunciaService {
   }
 
   findOne(id: number) {
-    const index = this.denuncias.findIndex((denuncia)=>denuncia.id==id);
+    const index = this.denuncias.findIndex((denuncia) => denuncia.id == id);
 
     return this.denuncias[index];
   }
@@ -38,20 +38,20 @@ export class DenunciaService {
     const nova_denuncia = {
       ...selecao,
       ...updateDenunciaDto,
-    }
+    };
 
-    const index = this.denuncias.findIndex((denuncia)=>denuncia.id==id);
+    const index = this.denuncias.findIndex((denuncia) => denuncia.id == id);
 
     this.denuncias[index] = nova_denuncia;
     return nova_denuncia;
   }
 
   remove(id: number) {
-    const index = this.denuncias.findIndex((denuncia)=>denuncia.id==id);
+    const index = this.denuncias.findIndex((denuncia) => denuncia.id == id);
 
-    if(index == -1){
+    if (index == -1) {
       throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
     }
-    this.denuncias.splice(index,1);
+    this.denuncias.splice(index, 1);
   }
 }

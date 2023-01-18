@@ -4,6 +4,6 @@ import { DenunciaController } from './denuncia.controller';
 
 @Module({
   controllers: [DenunciaController],
-  providers: [DenunciaService]
+  providers: [DenunciaService],
 })
 export class DenunciaModule {}

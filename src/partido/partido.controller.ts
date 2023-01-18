@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  NotFoundException,
+} from '@nestjs/common';
 import { PartidoService } from './partido.service';
 import { CreatePartidoDto } from './dto/create-partido.dto';
 import { UpdatePartidoDto } from './dto/update-partido.dto';
@@ -21,10 +30,10 @@ export class PartidoController {
   findOne(@Param('id') id: string) {
     const funcao = this.partidoService.findOne(+id);
 
-    if(!funcao){
-      throw new NotFoundException('Usuario não existente')
+    if (!funcao) {
+      throw new NotFoundException('Usuario não existente');
     }
-    return ;
+    return;
   }
 
   @Patch(':id')

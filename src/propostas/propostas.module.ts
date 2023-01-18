@@ -4,6 +4,6 @@ import { PropostasController } from './propostas.controller';
 
 @Module({
   controllers: [PropostasController],
-  providers: [PropostasService]
+  providers: [PropostasService],
 })
 export class PropostasModule {}

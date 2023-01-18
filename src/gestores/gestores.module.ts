@@ -4,6 +4,6 @@ import { GestoresController } from './gestores.controller';
 
 @Module({
   controllers: [GestoresController],
-  providers: [GestoresService]
+  providers: [GestoresService],
 })
 export class GestoresModule {}

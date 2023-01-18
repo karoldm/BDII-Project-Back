@@ -4,6 +4,6 @@ import { FuncaoController } from './funcao.controller';
 
 @Module({
   controllers: [FuncaoController],
-  providers: [FuncaoService]
+  providers: [FuncaoService],
 })
 export class FuncaoModule {}
