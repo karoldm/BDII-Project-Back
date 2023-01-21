@@ -1,57 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { CreateFuncaoDto } from './dto/create-funcao.dto';
-import { UpdateFuncaoDto } from './dto/update-funcao.dto';
-import { Funcao } from './entities/funcao.entity';
+import { Funcao } from './funcao.entity';
 
 @Injectable()
 export class FuncaoService {
-  private funcoes: Funcao[] = [];
+  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
-  create(createFuncaoDto: CreateFuncaoDto) {
-    const MaxID = this.funcoes[this.funcoes.length - 1]?.id || 0;
-
-    const id = MaxID + 1;
-
-    const funcao = {
-      id,
-      ...createFuncaoDto,
-    };
-
-    this.funcoes.push(funcao);
-
-    return funcao;
+  async create(createFuncaoDto: CreateFuncaoDto) {
+    await this.dataSource.query(
+      `INSERT INTO funcao (titulo, mandato) VALUES ('${createFuncaoDto.titulo}', ${createFuncaoDto.mandato});`,
+    );
   }
 
-  findAll() {
-    return this.funcoes;
+  async findAll(): Promise<Funcao[]> {
+    return await this.dataSource.query('SELECT * FROM funcao;');
   }
 
-  findOne(id: number) {
-    const index = this.funcoes.findIndex((Funcao) => Funcao.id == id);
-
-    return this.funcoes[index];
-  }
-
-  update(id: number, updateFuncaoDto: UpdateFuncaoDto) {
-    const selecao = this.findOne(id);
-
-    const nova_funcao = {
-      ...selecao,
-      ...updateFuncaoDto,
-    };
-
-    const index = this.funcoes.findIndex((Funcao) => Funcao.id == id);
-
-    this.funcoes[index] = nova_funcao;
-    return nova_funcao;
-  }
-
-  remove(id: number) {
-    const index = this.funcoes.findIndex((Funcao) => Funcao.id == id);
-
-    if (index == -1) {
-      throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
-    }
-    this.funcoes.splice(index, 1);
+  async remove(_id: number) {
+    await this.dataSource.query(`CALL del_funcao(${_id});`);
   }
 }

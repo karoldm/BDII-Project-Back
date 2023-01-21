@@ -1,51 +1,31 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreatePropostaDto } from './dto/create-proposta.dto';
-import { UpdatePropostaDto } from './dto/update-proposta.dto';
-import { Proposta } from './entities/proposta.entity';
+import { Proposta } from './proposta.entity';
 
 @Injectable()
 export class PropostasService {
-  private propostas: Proposta[] = [];
-  create(createPropostaDto: CreatePropostaDto) {
-    const Proposta = {
-      ...createPropostaDto,
-    };
+  constructor(@InjectDataSource() private readonly dataSourte: DataSource) {}
 
-    this.propostas.push(Proposta);
-
-    return Proposta;
+  async create(createPropostaDto: CreatePropostaDto) {
+    await this.dataSourte
+      .query(`INSERT INTO propostas_aprovadas (titulo, descricao, data_aprovacao, numero_gestor)
+    VALUES (
+      '${createPropostaDto.titulo}',
+      '${createPropostaDto.descricao}',
+      '${createPropostaDto.data_aprovacao}',
+      ${createPropostaDto.numero_gestor}
+    );`);
   }
 
-  findAll() {
-    return this.propostas;
+  async findAll(): Promise<Proposta[]> {
+    return await this.dataSourte.query('SELECT * FROM propostas_aprovadas;');
   }
 
-  findOne(id: number) {
-    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
-
-    return this.propostas[index];
-  }
-
-  update(id: number, updatePropostaDto: UpdatePropostaDto) {
-    const selecao = this.findOne(id);
-
-    const nova_Proposta = {
-      ...selecao,
-      ...updatePropostaDto,
-    };
-
-    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
-
-    this.propostas[index] = nova_Proposta;
-    return nova_Proposta;
-  }
-
-  remove(id: number) {
-    const index = this.propostas.findIndex((Proposta) => Proposta.numero == id);
-
-    if (index == -1) {
-      throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
-    }
-    this.propostas.splice(index, 1);
+  async remove(_id: number) {
+    this.dataSourte.query(
+      `DELETE FROM propostas_aprovadas WHERE numero=${_id};`,
+    );
   }
 }

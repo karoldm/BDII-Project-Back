@@ -1,57 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CreatePartidoDto } from './dto/create-partido.dto';
-import { UpdatePartidoDto } from './dto/update-partido.dto';
-import { Partido } from './entities/partido.entity';
+import { Partido } from './partido.entity';
 
 @Injectable()
 export class PartidoService {
-  private partidos: Partido[] = [];
+  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
-  create(createPartidoDto: CreatePartidoDto) {
-    const MaxID = this.partidos[this.partidos.length - 1]?.id || 0;
-
-    const id = MaxID + 1;
-
-    const Partido = {
-      id,
-      ...createPartidoDto,
-    };
-
-    this.partidos.push(Partido);
-
-    return Partido;
+  async create(createPartidoDto: CreatePartidoDto) {
+    await this.dataSource.query(
+      `INSERT INTO partido (nome, sigla) VALUES ('${createPartidoDto.nome}', '${createPartidoDto.sigla}');`,
+    );
   }
 
-  findAll() {
-    return this.partidos;
+  async findAll(): Promise<Partido[]> {
+    return await this.dataSource.query('SELECT * FROM partido;');
   }
 
-  findOne(id: number) {
-    const index = this.partidos.findIndex((Partido) => Partido.id == id);
-
-    return this.partidos[index];
-  }
-
-  update(id: number, updatePartidoDto: UpdatePartidoDto) {
-    const selecao = this.findOne(id);
-
-    const nova_Partido = {
-      ...selecao,
-      ...updatePartidoDto,
-    };
-
-    const index = this.partidos.findIndex((Partido) => Partido.id == id);
-
-    this.partidos[index] = nova_Partido;
-    return nova_Partido;
-  }
-
-  remove(id: number) {
-    const index = this.partidos.findIndex((Partido) => Partido.id == id);
-
-    if (index == -1) {
-      throw new NotFoundException(`Usuario com cpf #${id} nao achado`);
-    }
-    this.partidos.splice(index, 1);
+  async remove(_id: number) {
+    this.dataSource.query(`CALL del_partido(${_id});`);
   }
 }

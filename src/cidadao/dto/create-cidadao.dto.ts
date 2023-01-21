@@ -1,12 +1,6 @@
-import {
-  IsString,
-  IsDate,
-  IsNumber,
-  MinLength,
-  MaxLength,
-} from 'class-validator';
+import { IsString, IsNumber, MinLength, MaxLength } from 'class-validator';
 
-export class CreateUsuarioDto {
+export class CreateCidadaoDto {
   @IsString()
   @MinLength(11)
   @MaxLength(11)
@@ -16,8 +10,8 @@ export class CreateUsuarioDto {
   @MaxLength(60)
   nome_completo: string;
 
-  @IsDate()
-  data_nascimento: Date;
+  @IsString()
+  data_nascimento: string;
 
   @IsString()
   @MaxLength(50)
@@ -36,5 +30,13 @@ export class CreateUsuarioDto {
   uf: string;
 
   @IsNumber()
-  numero: number;
+  nro: number;
+
+  @IsString()
+  @MaxLength(60)
+  email: string;
+
+  @IsString()
+  @MaxLength(60)
+  senha: string;
 }

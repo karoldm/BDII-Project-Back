@@ -1,18 +1,33 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+
 import { AppService } from './app.service';
+import { AppController } from './app.controller';
+
 import { DenunciaModule } from './denuncia/denuncia.module';
-import { UsuariosModule } from './usuarios/usuarios.module';
-import { GestoresModule } from './gestores/gestores.module';
+import { CidadaoModule } from './cidadao/cidadao.module';
+import { GestorModule } from './gestores/gestor.module';
 import { PropostasModule } from './propostas/propostas.module';
 import { PartidoModule } from './partido/partido.module';
 import { FuncaoModule } from './funcao/funcao.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: 'kdm1579',
+      database: 'gestores',
+      entities: [],
+      logging: false,
+      synchronize: false,
+    }),
     DenunciaModule,
-    UsuariosModule,
-    GestoresModule,
+    CidadaoModule,
+    GestorModule,
     PropostasModule,
     PartidoModule,
     FuncaoModule,
@@ -20,4 +35,6 @@ import { FuncaoModule } from './funcao/funcao.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}

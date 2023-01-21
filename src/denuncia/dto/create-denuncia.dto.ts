@@ -1,14 +1,8 @@
-import {
-  IsString,
-  IsDate,
-  IsNumber,
-  MinLength,
-  MaxLength,
-} from 'class-validator';
+import { IsString, IsNumber, MinLength, MaxLength } from 'class-validator';
 
 export class CreateDenunciaDto {
-  @IsDate()
-  data_denuncia: Date;
+  @IsString()
+  data_denuncia: string;
 
   @IsString()
   @MaxLength(500)

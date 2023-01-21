@@ -1,6 +1,6 @@
 import { IsString, IsDate, IsNumber, MaxLength } from 'class-validator';
 
-export class CreateGestoreDto {
+export class CreateGestorDto {
   @IsDate()
   data_posse: Date;
   @IsDate()

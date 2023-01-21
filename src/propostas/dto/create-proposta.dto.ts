@@ -1,8 +1,5 @@
 import { IsString, IsDate, IsNumber, MaxLength } from 'class-validator';
 export class CreatePropostaDto {
-  @IsNumber()
-  numero: number;
-
   @IsString()
   @MaxLength(100)
   titulo: string;
@@ -11,8 +8,8 @@ export class CreatePropostaDto {
   @MaxLength(500)
   descricao: string;
 
-  @IsDate()
-  data_aprovacao: Date;
+  @IsString()
+  data_aprovacao: string;
 
   @IsNumber()
   numero_gestor: number;

@@ -1,16 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  NotFoundException,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { PropostasService } from './propostas.service';
 import { CreatePropostaDto } from './dto/create-proposta.dto';
-import { UpdatePropostaDto } from './dto/update-proposta.dto';
 
 @Controller('propostas')
 export class PropostasController {
@@ -18,7 +8,10 @@ export class PropostasController {
 
   @Post()
   create(@Body() createPropostaDto: CreatePropostaDto) {
-    return this.propostasService.create(createPropostaDto);
+    const date = new Date(createPropostaDto.data_aprovacao);
+    const newProposta = { data_aprovacao: date, ...createPropostaDto };
+    console.log(newProposta);
+    return this.propostasService.create(newProposta);
   }
 
   @Get()
@@ -26,26 +19,8 @@ export class PropostasController {
     return this.propostasService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    const proposta = this.propostasService.findOne(+id);
-
-    if (!proposta) {
-      throw new NotFoundException('Usuario não existente');
-    }
-    return;
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updatePropostaDto: UpdatePropostaDto,
-  ) {
-    return this.propostasService.update(+id, updatePropostaDto);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.propostasService.remove(+id);
+  remove(@Param('id') _id: number) {
+    return this.propostasService.remove(_id);
   }
 }
