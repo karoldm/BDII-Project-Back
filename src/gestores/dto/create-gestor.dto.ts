@@ -1,10 +1,10 @@
 import { IsString, IsDate, IsNumber, MaxLength } from 'class-validator';
 
 export class CreateGestorDto {
-  @IsDate()
-  data_posse: Date;
-  @IsDate()
-  data_nascimento: Date;
+  @IsString()
+  data_posse: string;
+  @IsString()
+  data_nascimento: string;
   @IsString()
   foto: string;
   @IsString()

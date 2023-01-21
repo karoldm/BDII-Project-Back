@@ -11,8 +11,7 @@ export class GestorService {
 
   async create(createGestorDto: CreateGestorDto) {
     await this.dataSource.query(
-      `INSERT INTO gestor (data_posse, data_nascimento, foto, nome_completo, id_funcao, id_partido) 
-      VALUES(
+      `CALL insere_Gestor(
         '${createGestorDto.data_posse}', 
         '${createGestorDto.data_nascimento}', 
         '${createGestorDto.foto}', 

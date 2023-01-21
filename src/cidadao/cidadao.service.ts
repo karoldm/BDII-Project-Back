@@ -10,7 +10,7 @@ export class CidadaoService {
 
   async create(createCidadaoDto: CreateCidadaoDto) {
     return await this.dataSource.query(
-      `INSERT INTO cidadao VALUES (
+      `CALL insere_Cidadao(
         '${createCidadaoDto.cpf}', 
         '${createCidadaoDto.nome_completo}', 
         '${createCidadaoDto.data_nascimento}', 

@@ -9,8 +9,8 @@ export class PartidoService {
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
   async create(createPartidoDto: CreatePartidoDto) {
-    await this.dataSource.query(
-      `INSERT INTO partido (nome, sigla) VALUES ('${createPartidoDto.nome}', '${createPartidoDto.sigla}');`,
+    return await this.dataSource.query(
+      `CALL insere_Partido('${createPartidoDto.nome}', '${createPartidoDto.sigla}');`,
     );
   }
 

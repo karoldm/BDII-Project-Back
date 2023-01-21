@@ -10,7 +10,7 @@ export class FuncaoService {
 
   async create(createFuncaoDto: CreateFuncaoDto) {
     await this.dataSource.query(
-      `INSERT INTO funcao (titulo, mandato) VALUES ('${createFuncaoDto.titulo}', ${createFuncaoDto.mandato});`,
+      `CALL insere_funcao('${createFuncaoDto.titulo}', ${createFuncaoDto.mandato});`,
     );
   }
 

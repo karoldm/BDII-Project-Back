@@ -9,9 +9,7 @@ export class PropostasService {
   constructor(@InjectDataSource() private readonly dataSourte: DataSource) {}
 
   async create(createPropostaDto: CreatePropostaDto) {
-    await this.dataSourte
-      .query(`INSERT INTO propostas_aprovadas (titulo, descricao, data_aprovacao, numero_gestor)
-    VALUES (
+    await this.dataSourte.query(`CALL insere_Proposta(
       '${createPropostaDto.titulo}',
       '${createPropostaDto.descricao}',
       '${createPropostaDto.data_aprovacao}',
