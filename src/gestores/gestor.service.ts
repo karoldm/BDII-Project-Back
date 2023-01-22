@@ -32,14 +32,14 @@ export class GestorService {
     return gestor[0];
   }
 
-  async update(updateGestorDto: UpdateGestorDto) {
+  async update(updateGestorDto: UpdateGestorDto, numero: number) {
     await this.dataSource.query(`UPDATE gestor SET 
     data_posse='${updateGestorDto.data_posse}', 
     data_nascimento='${updateGestorDto.data_nascimento}',
     foto='${updateGestorDto.foto}',
     nome_completo='${updateGestorDto.nome_completo}',
     id_funcao=${updateGestorDto.id_funcao},
-    id_partido=${updateGestorDto.id_partido};`);
+    id_partido=${updateGestorDto.id_partido} WHERE numero = ${numero};`);
   }
 
   async remove(_id: number) {

@@ -43,9 +43,9 @@ export class GestorController {
     return this.service.create(newGestor);
   }
 
-  @Put()
-  update(@Body() updateGestorDto: CreateGestorDto) {
-    return this.service.update(updateGestorDto);
+  @Put(':id')
+  update(@Body() updateGestorDto: CreateGestorDto, @Param('id') _id) {
+    return this.service.update(updateGestorDto, _id);
   }
 
   @Delete(':id')
