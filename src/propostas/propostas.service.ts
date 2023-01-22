@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { CreatePropostaDto } from './dto/create-proposta.dto';
 import { Proposta } from './proposta.entity';
 
@@ -9,7 +9,7 @@ export class PropostasService {
   constructor(@InjectDataSource() private readonly dataSourte: DataSource) {}
 
   async create(createPropostaDto: CreatePropostaDto) {
-    await this.dataSourte.query(`CALL insere_Proposta(
+    return await this.dataSourte.query(`CALL insere_Proposta(
       '${createPropostaDto.titulo}',
       '${createPropostaDto.descricao}',
       '${createPropostaDto.data_aprovacao}',

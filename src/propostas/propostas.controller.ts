@@ -10,7 +10,6 @@ export class PropostasController {
   create(@Body() createPropostaDto: CreatePropostaDto) {
     const date = new Date(createPropostaDto.data_aprovacao);
     const newProposta = { data_aprovacao: date, ...createPropostaDto };
-    console.log(newProposta);
     return this.propostasService.create(newProposta);
   }
 
